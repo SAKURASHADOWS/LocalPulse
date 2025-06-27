@@ -1,115 +1,81 @@
-// --- LocalPulse Backend Server v2.0 --- THEMATIC ANALYSIS ENGINE ---
+// --- LocalPulse Backend Server v3.1 --- Added Login Functionality ---
 // File: server.js
+
+require('dotenv').config(); 
 
 const express = require('express');
 const cors = require('cors');
+const { createClient } = require('@supabase/supabase-js');
+
+// --- Supabase Connection ---
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+// --- CORS Configuration ---
+const corsOptions = {
+  origin: [
+      'https://sakurashadows.github.io', // Your live site
+      'http://127.0.0.1:5500',           // Your local Live Server
+      'http://localhost:5500'            // An alternative for the local address
+  ],
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 app.use(express.json());
-
-// --- ADVANCED AI ANALYSIS FUNCTION (v2.0) ---
-async function getThematicAIAnalysis(reviewsText) {
-    console.log("Starting Thematic AI analysis...");
-
-    // Dictionaries for thematic analysis
-    const themes = {
-        Food: ['food', 'pizza', 'burger', 'soup', 'dish', 'tasty', 'delicious', 'mancare', 'preparat', 'gustos', 'delicios'],
-        Service: ['service', 'waiter', 'staff', 'friendly', 'slow', 'waited', 'servire', 'ospatar', 'personal', 'amabil', 'rapid', 'incet'],
-        Ambiance: ['ambiance', 'atmosphere', 'music', 'decor', 'vibe', 'atmosfera', 'muzica', 'design'],
-        Price: ['price', 'expensive', 'cheap', 'value', 'cost', 'pret', 'scump', 'ieftin', 'valoare'],
-        Cleanliness: ['clean', 'dirty', 'spotless', 'hygiene', 'curat', 'murdar', 'igiena']
-    };
-
-    const positiveKeywords = ['excellent', 'amazing', 'love', 'perfect', 'fast', 'delicious', 'friendly', 'great', 'best', 'fantastic', 'wonderful', 'recommended', 'impresionat', 'iubit', 'perfecta'];
-    const negativeKeywords = ['slow', 'waiting', 'waited', 'bad', 'disappointed', 'cold', 'problem', 'issue', 'poor', 'terrible', 'awful', 'never again', 'dezamagit', 'problema', 'rece'];
-
-    // Initialize the result structure
-    let analysisResult = {
-        Food: { positive: [], negative: [] },
-        Service: { positive: [], negative: [] },
-        Ambiance: { positive: [], negative: [] },
-        Price: { positive: [], negative: [] },
-        Cleanliness: { positive: [], negative: [] },
-        Other: { positive: [], negative: [] }
-    };
-
-    const sentences = reviewsText.split(/[.!?]/);
-
-    sentences.forEach(sentence => {
-        const trimmedSentence = sentence.trim().toLowerCase();
-        if (!trimmedSentence) return;
-
-        let categorized = false;
-
-        // Check each theme
-        for (const theme in themes) {
-            for (const keyword of themes[theme]) {
-                if (trimmedSentence.includes(keyword)) {
-                    // We found a theme, now check sentiment
-                    const isPositive = positiveKeywords.some(pKeyword => trimmedSentence.includes(pKeyword));
-                    const isNegative = negativeKeywords.some(nKeyword => trimmedSentence.includes(nKeyword));
-                    
-                    if (isPositive) {
-                        analysisResult[theme].positive.push(sentence.trim());
-                    } else if (isNegative) {
-                        analysisResult[theme].negative.push(sentence.trim());
-                    } else {
-                        // If theme keyword is present but no strong sentiment keyword, add to "Other"
-                        analysisResult.Other.positive.push(sentence.trim());
-                    }
-                    categorized = true;
-                    break; // Move to next sentence once a theme is found
-                }
-            }
-            if (categorized) break;
-        }
-
-        // If no theme was found, categorize as "Other"
-        if (!categorized) {
-            const isPositive = positiveKeywords.some(pKeyword => trimmedSentence.includes(pKeyword));
-            const isNegative = negativeKeywords.some(nKeyword => trimmedSentence.includes(nKeyword));
-
-            if (isPositive) analysisResult.Other.positive.push(sentence.trim());
-            else if (isNegative) analysisResult.Other.negative.push(sentence.trim());
-        }
-    });
-
-    // Generate a simple summary
-    let summary = "The analysis highlights feedback on several key areas.";
-    // This could be made much more intelligent later.
-
-    // Simulate network delay for realism
-    await new Promise(resolve => setTimeout(resolve, 800)); 
-    console.log("Thematic analysis complete.");
-
-    return { analysis: analysisResult, summary: summary };
-}
 
 
 // --- API Routes ---
-app.get('/', (req, res) => {
-    res.send('LocalPulse AI Server v2.0 is running!');
-});
 
 app.post('/analyze', async (req, res) => {
-    try {
-        const reviewsText = req.body.text;
-        if (!reviewsText) {
-            return res.status(400).json({ error: 'No text provided.' });
-        }
-        const result = await getThematicAIAnalysis(reviewsText);
-        res.json(result);
-    } catch (error) {
-        console.error("Error in AI analysis:", error);
-        res.status(500).json({ error: 'An error occurred during analysis.' });
-    }
+    // For now, this is a placeholder. We will add the AI logic back later.
+    res.json({ message: "Analysis function is ready." });
 });
+
+// --- User Registration Route ---
+app.post('/register', async (req, res) => {
+    const { email, password } = req.body;
+    const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password
+    });
+
+    if (error) {
+        console.error('Supabase sign up error:', error.message);
+        return res.status(400).json({ error: error.message });
+    }
+
+    console.log('User registered successfully:', data.user.email);
+    res.status(200).json({ user: data.user });
+});
+
+// --- ================== NEW USER LOGIN ROUTE ================== ---
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    // Use Supabase auth to sign in a user
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+    });
+
+    if (error) {
+        // If Supabase returns an error (e.g., invalid credentials)
+        console.error('Supabase sign in error:', error.message);
+        return res.status(400).json({ error: "Invalid login credentials" }); // Send a generic error
+    }
+    
+    // If successful, send back the user data and session
+    console.log('User logged in successfully:', data.user.email);
+    res.status(200).json({ user: data.user, session: data.session });
+});
+// --- ========================================================== ---
 
 
 // --- Start the Server ---
 app.listen(PORT, () => {
-    console.log(`Server v2.0 is listening on http://localhost:${PORT}`);
+    console.log(`Server v3.1 with Auth is listening on http://localhost:${PORT}`);
 });
