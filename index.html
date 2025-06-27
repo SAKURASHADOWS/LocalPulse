@@ -17,10 +17,17 @@
     <header>
         <h1>LocalPulse</h1>
         
-        <nav>
-            <a href="login.html" class="nav-button">Login</a>
-            <a href="register.html" class="nav-button register">Register</a>
-        </nav>
+        <nav id="nav-menu">
+    <div id="logged-out-view">
+        <a href="login.html" class="nav-button">Login</a>
+        <a href="register.html" class="nav-button register">Register</a>
+    </div>
+
+    <div id="logged-in-view" style="display: none;">
+        <span id="user-email-display"></span>
+        <button id="logout-button" class="nav-button">Logout</button>
+    </div>
+</nav>
         <p>Your AI-Powered Feedback Analyst</p>
     </header>
 
