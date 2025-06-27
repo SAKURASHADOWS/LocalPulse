@@ -74,16 +74,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 chartCanvas.parentElement.style.display = 'block'; // Show the chart container
                 const ctx = chartCanvas.getContext('2d');
                 
-                sentimentChart = new Chart(ctx, {
-                    type: 'pie', // Type of chart
+               sentimentChart = new Chart(ctx, {
+                    type: 'pie', // Tipul de grafic
                     data: {
                         labels: ['Positive Sentiments', 'Negative Sentiments'],
                         datasets: [{
                             label: 'Sentiment Analysis',
                             data: [positiveCount, negativeCount],
                             backgroundColor: [
-                                'rgba(40, 167, 69, 0.7)',  // Green for positive
-                                'rgba(220, 53, 69, 0.7)'   // Red for negative
+                                'rgba(40, 167, 69, 0.7)',  // Verde pentru pozitiv
+                                'rgba(220, 53, 69, 0.7)'   // Roșu pentru negativ
                             ],
                             borderColor: [
                                 'rgba(40, 167, 69, 1)',
@@ -96,4 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         responsive: true,
                         plugins: {
                             legend: {
-                                position: 'top
+                                position: 'top',
+                            }, // Aici era probabil o acoladă sau virgulă lipsă
+                            title: {
+                                display: true,
+                                text: 'Sentiment Distribution'
+                            }
+                        }
+                    }
+                });
