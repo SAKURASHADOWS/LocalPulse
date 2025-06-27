@@ -1,20 +1,27 @@
-// --- script.js v0.2 --- Client-Server Communication ---
+// --- script.js v1.1 --- Chart.js Implementation ---
+
+// This variable will hold our chart object, so we can destroy it before creating a new one.
+let sentimentChart = null;
 
 document.addEventListener('DOMContentLoaded', () => {
+
     const analyzeButton = document.getElementById('analyze-button');
     const reviewsInput = document.getElementById('reviews-input');
     const positiveResultsList = document.getElementById('positive-results');
     const negativeResultsList = document.getElementById('negative-results');
+    const chartCanvas = document.getElementById('sentimentChart'); // Get the canvas element
 
     analyzeButton.addEventListener('click', async () => {
         const reviewsText = reviewsInput.value;
 
         positiveResultsList.innerHTML = '<li>Analyzing... Please wait.</li>';
         negativeResultsList.innerHTML = '';
+        
+        // Hide the chart container initially
+        chartCanvas.parentElement.style.display = 'none';
 
         try {
-
-            const response = await fetch('https://localpulse-i7eg.onrender.com/analyze', {
+            const response = await fetch('http://localhost:3000/analyze', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -31,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             positiveResultsList.innerHTML = '';
             negativeResultsList.innerHTML = '';
 
+            // Display text results (as before)
             if (analysisResult.positivePoints && analysisResult.positivePoints.length > 0) {
                 analysisResult.positivePoints.forEach(point => {
                     const listItem = document.createElement('li');
@@ -51,10 +59,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 negativeResultsList.innerHTML = '<li>No specific negative points found.</li>';
             }
 
-        } catch (error) {
-            console.error('Error during analysis:', error);
-            positiveResultsList.innerHTML = '';
-            negativeResultsList.innerHTML = `<li>Error: Could not connect to the AI server. Make sure it's running.</li>`;
-        }
-    });
-});
+            // --- ================== NEW CHART LOGIC ================== ---
+
+            // Destroy the old chart if it exists, to prevent bugs
+            if (sentimentChart) {
+                sentimentChart.destroy();
+            }
+            
+            const positiveCount = analysisResult.positivePoints.length;
+            const negativeCount = analysisResult.negativePoints.length;
+
+            // Only draw the chart if there is data
+            if (positiveCount > 0 || negativeCount > 0) {
+                chartCanvas.parentElement.style.display = 'block'; // Show the chart container
+                const ctx = chartCanvas.getContext('2d');
+                
+                sentimentChart = new Chart(ctx, {
+                    type: 'pie', // Type of chart
+                    data: {
+                        labels: ['Positive Sentiments', 'Negative Sentiments'],
+                        datasets: [{
+                            label: 'Sentiment Analysis',
+                            data: [positiveCount, negativeCount],
+                            backgroundColor: [
+                                'rgba(40, 167, 69, 0.7)',  // Green for positive
+                                'rgba(220, 53, 69, 0.7)'   // Red for negative
+                            ],
+                            borderColor: [
+                                'rgba(40, 167, 69, 1)',
+                                'rgba(220, 53, 69, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top

@@ -136,3 +136,20 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+/* --- Styling for Chart Container (New) --- */
+
+.chart-container {
+    background: var(--container-bg);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    border: 1px solid var(--border-color);
+    margin-bottom: 40px;
+}
+
+.chart-container h2 {
+    text-align: center;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}

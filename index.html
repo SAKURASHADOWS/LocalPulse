@@ -8,7 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
 <body>
 
     <header>
@@ -23,6 +25,9 @@
             <button id="analyze-button">Analyze Reviews</button>
         </div>
 
+        <div class="chart-container">
+            <h2>Analysis Overview</h2>
+            <canvas id="sentimentChart"></canvas> </div>
         <div class="results-container">
             <div class="result-box positive">
                 <h2>What Customers Love (Strengths)</h2>
@@ -40,7 +45,6 @@
     <footer>
         <p>&copy; 2025 LocalPulse. All rights reserved.</p>
     </footer>
-<script src="script.js"></script>
-</body>
+    
+    <script src="script.js"></script> </body>
 </html>
-
