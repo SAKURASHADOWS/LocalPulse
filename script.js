@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/analyze', {
+            const response = await fetch('https://localpulse-i7eg.onrender.com/analyze', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
