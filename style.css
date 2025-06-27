@@ -260,3 +260,42 @@ footer {
     text-align: center;
     margin-top: 20px;
 }
+/* --- Navigation Styles (New) --- */
+
+header {
+    position: relative; /* Necesar pentru a poziționa meniul în interior */
+    padding-top: 60px; /* Adaugă spațiu pentru a nu se suprapune meniul peste titlu */
+}
+
+nav {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px; /* Spațiu între butoane */
+}
+
+.nav-button {
+    padding: 8px 16px;
+    border: 1px solid var(--tech-blue);
+    color: var(--tech-blue);
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-button:hover {
+    background-color: var(--tech-blue);
+    color: white;
+}
+
+/* Stil special pentru butonul de Register, pentru a ieși în evidență */
+.nav-button.register {
+    background-color: var(--tech-blue);
+    color: white;
+}
+
+.nav-button.register:hover {
+    background-color: var(--dark-blue);
+}
