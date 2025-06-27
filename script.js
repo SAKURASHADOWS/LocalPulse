@@ -18,7 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
         negativeResultsList.innerHTML = '';
         
         // Hide the chart container initially
-        chartCanvas.parentElement.style.display = 'none';
+        if (chartCanvas.parentElement) {
+            chartCanvas.parentElement.style.display = 'none';
+        }
 
         try {
             const response = await fetch('http://localhost:3000/analyze', {
@@ -59,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 negativeResultsList.innerHTML = '<li>No specific negative points found.</li>';
             }
 
-            // --- ================== NEW CHART LOGIC ================== ---
+            // --- NEW CHART LOGIC ---
 
             // Destroy the old chart if it exists, to prevent bugs
             if (sentimentChart) {
@@ -71,19 +73,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Only draw the chart if there is data
             if (positiveCount > 0 || negativeCount > 0) {
-                chartCanvas.parentElement.style.display = 'block'; // Show the chart container
+                if (chartCanvas.parentElement) {
+                    chartCanvas.parentElement.style.display = 'block'; // Show the chart container
+                }
                 const ctx = chartCanvas.getContext('2d');
                 
-               sentimentChart = new Chart(ctx, {
-                    type: 'pie', // Tipul de grafic
+                sentimentChart = new Chart(ctx, {
+                    type: 'pie', // Type of chart
                     data: {
                         labels: ['Positive Sentiments', 'Negative Sentiments'],
                         datasets: [{
                             label: 'Sentiment Analysis',
                             data: [positiveCount, negativeCount],
                             backgroundColor: [
-                                'rgba(40, 167, 69, 0.7)',  // Verde pentru pozitiv
-                                'rgba(220, 53, 69, 0.7)'   // Roșu pentru negativ
+                                'rgba(40, 167, 69, 0.7)',  // Green for positive
+                                'rgba(220, 53, 69, 0.7)'   // Red for negative
                             ],
                             borderColor: [
                                 'rgba(40, 167, 69, 1)',
@@ -97,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         plugins: {
                             legend: {
                                 position: 'top',
-                            }, // Aici era probabil o acoladă sau virgulă lipsă
+                            },
                             title: {
                                 display: true,
                                 text: 'Sentiment Distribution'
@@ -105,3 +109,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
                 });
+            }
+
+        } catch (error) {
+            console.error('Error during analysis:', error);
+            positiveResultsList.innerHTML = '';
+            if (document.getElementById('negative-results')) { // Check if element exists before changing
+               document.getElementById('negative-results').innerHTML = `<li>Error: Could not connect to the AI server. Make sure it's running.</li>`;
+            }
+        }
+    });
+
+}); 
