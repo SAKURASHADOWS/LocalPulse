@@ -1,0 +1,138 @@
+/* --- General Styling for LocalPulse --- */
+
+:root {
+    --tech-blue: #007BFF; /* Albastrul nostru tech principal */
+    --dark-blue: #0056b3;
+    --background-color: #f4f7f9;
+    --text-color: #333;
+    --container-bg: #ffffff;
+    --border-color: #e2e8f0;
+    --positive-color: #28a745;
+    --negative-color: #dc3545;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    color: var(--tech-blue);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+header p {
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+
+main {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.input-container {
+    background: var(--container-bg);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    border: 1px solid var(--border-color);
+    margin-bottom: 40px;
+}
+
+h2 {
+    margin-top: 0;
+    color: #2d3748;
+}
+
+textarea {
+    width: 100%;
+    min-height: 200px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 15px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    box-sizing: border-box; /* Important for padding and width */
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: var(--tech-blue);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+    background-color: var(--dark-blue);
+}
+
+.results-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.result-box {
+    background: var(--container-bg);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    border: 1px solid var(--border-color);
+}
+
+.result-box h2 {
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.result-box.positive h2 {
+    color: var(--positive-color);
+    border-bottom-color: var(--positive-color);
+}
+
+.result-box.negative h2 {
+    color: var(--negative-color);
+    border-bottom-color: var(--negative-color);
+}
+
+.result-box ul {
+    padding-left: 20px;
+    margin-top: 20px;
+}
+
+.result-box li {
+    margin-bottom: 10px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 60px;
+    color: #6c757d;
+}
+
+@media (max-width: 768px) {
+    .results-container {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalPulse - AI Review Analysis</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>LocalPulse</h1>
+        <p>Your AI-Powered Feedback Analyst</p>
+    </header>
+
+    <main>
+        <div class="input-container">
+            <h2>Paste Your Customer Reviews Here</h2>
+            <textarea id="reviews-input" placeholder="Copy and paste a block of reviews here..."></textarea>
+            <button id="analyze-button">Analyze Reviews</button>
+        </div>
+
+        <div class="results-container">
+            <div class="result-box positive">
+                <h2>What Customers Love (Strengths)</h2>
+                <ul id="positive-results">
+                    </ul>
+            </div>
+            <div class="result-box negative">
+                <h2>What to Improve (Weaknesses)</h2>
+                <ul id="negative-results">
+                    </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LocalPulse. All rights reserved.</p>
+    </footer>
+<script src="script.js"></script>
+</body>
+</html>
+
