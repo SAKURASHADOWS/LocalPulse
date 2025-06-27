@@ -4,18 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LocalPulse - AI Review Analysis</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
-    <link rel="apple-touch-icon" href="assets/favicon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
 </head>
 <body>
 
     <header>
         <h1>LocalPulse</h1>
+        
+        <nav>
+            <a href="login.html" class="nav-button">Login</a>
+            <a href="register.html" class="nav-button register">Register</a>
+        </nav>
         <p>Your AI-Powered Feedback Analyst</p>
     </header>
 
@@ -25,14 +30,11 @@
             <textarea id="reviews-input" placeholder="Copy and paste a block of reviews here..."></textarea>
             <button id="analyze-button">Analyze Reviews</button>
         </div>
-
         <div class="chart-container">
             <h2>Analysis Overview</h2>
             <canvas id="sentimentChart"></canvas>
         </div>
-
-        <div id="thematic-results-container" class="thematic-results">
-            </div>
+        <div id="thematic-results-container" class="thematic-results"></div>
     </main>
 
     <footer>
