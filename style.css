@@ -153,3 +153,56 @@ footer {
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
+/* --- Styling for Thematic Analysis Results (v2.0) --- */
+
+.thematic-results {
+    display: grid;
+    /* Creează coloane care au o lățime minimă de 350px, dar se extind pentru a umple spațiul */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px; /* Spațiu între carduri */
+}
+
+.theme-card {
+    background: var(--container-bg);
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    border: 1px solid var(--border-color);
+    /* Ascundem cardul dacă este gol */
+    display: none; 
+}
+
+.theme-card h3 {
+    margin-top: 0;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    font-size: 1.2rem;
+    color: #2d3748;
+}
+
+.theme-card ul {
+    padding-left: 0; /* Eliminăm padding-ul standard */
+    list-style-type: none; /* Eliminăm bulinele standard */
+    margin: 10px 0;
+}
+
+.theme-card li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0; /* Linie subtilă de separare */
+}
+
+.theme-card li:last-child {
+    border-bottom: none; /* Eliminăm linia pentru ultimul element */
+}
+
+.theme-card .positive-item::before {
+    content: '👍'; /* Adăugăm un emoji pozitiv */
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+.theme-card .negative-item::before {
+    content: '👎'; /* Adăugăm un emoji negativ */
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
