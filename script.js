@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // This is the URL for our LOCAL server.
-            const serverUrl = 'http://localhost:3000/analyze';
+            const serverUrl = 'https://localpulse-i7eg.onrender.com/analyze';
 
             const response = await fetch(serverUrl, {
                 method: 'POST',
