@@ -299,3 +299,21 @@ nav {
 .nav-button.register:hover {
     background-color: var(--dark-blue);
 }
+/* --- Donation Section Styles --- */
+.donation-section {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding: 25px;
+    background-color: #e7f5ff; /* Un albastru foarte deschis și prietenos */
+    border: 1px solid #b3d7ff;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.donation-section p {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #0056b3;
+    font-weight: 500;
+}
