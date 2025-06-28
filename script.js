@@ -1,21 +1,9 @@
-// --- script.js v3.0 --- Protected Route & User State ---
+// --- script.js v3.0 --- Free & Open Version ---
 
-// --- NEW: The "Bodyguard" function ---
-// This code runs immediately when the script is loaded.
-const session = JSON.parse(localStorage.getItem('localpulse_session'));
+document.addEventListener('DOMContentLoaded', () => {
+    // Nu mai avem nevoie de "gardianul" care verifică sesiunea.
+    // Trecem direct la logica aplicației.
 
-// If there is NO session data in Local Storage, redirect to the login page.
-if (!session) {
-    // We are not logged in, redirect to login.html
-    window.location.href = 'login.html';
-} else {
-    // If we ARE logged in, we allow the rest of the code to run.
-    initializeApp();
-}
-
-
-// We wrap all our app logic in a function called initializeApp
-function initializeApp() {
     let sentimentChart = null;
     const analyzeButton = document.getElementById('analyze-button');
     const reviewsInput = document.getElementById('reviews-input');
@@ -33,16 +21,22 @@ function initializeApp() {
         }
 
         try {
+            // Folosim direct adresa serverului public
             const serverUrl = 'https://localpulse-i7eg.onrender.com/analyze';
+
             const response = await fetch(serverUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ text: reviewsText })
             });
-            if (!response.ok) { throw new Error(`Server error: ${response.statusText}`); }
+
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.statusText}`);
+            }
+
             const result = await response.json();
-            thematicResultsContainer.innerHTML = '';
-            
+            thematicResultsContainer.innerHTML = ''; 
+
             const analysisData = result.analysis;
             let totalPositive = 0;
             let totalNegative = 0;
@@ -50,6 +44,7 @@ function initializeApp() {
             for (const theme in analysisData) {
                 const positivePoints = analysisData[theme].positive;
                 const negativePoints = analysisData[theme].negative;
+
                 if (positivePoints.length > 0 || negativePoints.length > 0) {
                     const card = document.createElement('div');
                     card.className = 'theme-card';
@@ -57,6 +52,7 @@ function initializeApp() {
                     title.textContent = theme;
                     card.appendChild(title);
                     const list = document.createElement('ul');
+
                     positivePoints.forEach(point => {
                         const listItem = document.createElement('li');
                         listItem.className = 'positive-item';
@@ -64,6 +60,7 @@ function initializeApp() {
                         list.appendChild(listItem);
                         totalPositive++;
                     });
+
                     negativePoints.forEach(point => {
                         const listItem = document.createElement('li');
                         listItem.className = 'negative-item';
@@ -71,6 +68,7 @@ function initializeApp() {
                         list.appendChild(listItem);
                         totalNegative++;
                     });
+                    
                     card.appendChild(list);
                     card.style.display = 'flex';
                     thematicResultsContainer.appendChild(card);
@@ -96,9 +94,10 @@ function initializeApp() {
                     options: { responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Overall Sentiment Distribution' } } }
                 });
             }
+
         } catch (error) {
             console.error('A detailed error occurred:', error);
-            thematicResultsContainer.innerHTML = `<p class="error-text">An error occurred. Check the console (F12) for details.</p>`;
+            thematicResultsContainer.innerHTML = `<p class="error-text">An error occurred. Please try again later.</p>`;
         }
     });
-}
+});
